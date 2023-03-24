@@ -17,6 +17,10 @@
 * Export!  
   ***If you have saved paths, then load them with "Load Paths"***
 
+## Differences between "AllMode" and "FolderMode"
+![window](https://github.com/LordShadow505/SimpleSpriteExporter-Brawlhalla/blob/main/Wiki/AllMode.png)
+![window](https://github.com/LordShadow505/SimpleSpriteExporter-Brawlhalla/blob/main/Wiki/FolderMode.png)
+
 ## Licenses
 
 Simple Sprite Exporter uses modified code of these libraries:
