@@ -18,7 +18,9 @@
   ***If you have saved paths, then load them with "Load Paths"***
 
 ## Differences between "AllMode" and "FolderMode"
+### All Mode
 ![window](https://github.com/LordShadow505/SimpleSpriteExporter-Brawlhalla/blob/main/Wiki/AllMode.png)
+### Folder Mode
 ![window](https://github.com/LordShadow505/SimpleSpriteExporter-Brawlhalla/blob/main/Wiki/FolderMode.png)
 
 ## Licenses
