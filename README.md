@@ -7,8 +7,8 @@
 
 ## How to use
 
-* Download dist folder
-* Open SimpleSpriteExporter.jar
+* Download the source code.
+* Open SimpleSpriteExporter.jar.
 * Select the installation path of Brawlhalla.
 * Select the path where you commonly extract Brawlhalla files (Where you export your files to do modding stuff)
 * Save the paths by clicking on "Save". (Optional, but do it if you want to work faster)
