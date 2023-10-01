@@ -12,7 +12,8 @@
 * Open SSE.Setup.exe.
 * Install the program.
 * Select the path where you commonly extract Brawlhalla files (Where you export your files to do modding stuff)
-* Import an SWF file by clicking on "+" button. 
+* Import an SWF file by clicking on "+" button.
+* Select the skin 
 * Select the sprite export mode.
 * Export!  
 
