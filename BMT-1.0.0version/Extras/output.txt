@@ -1,0 +1,380 @@
+Waist1 {
+SpriteID = 11
+ShapeID = 10
+Width = 605
+Height = 449
+hasRotate = false
+rotateAngle = 0
+hasScale = false
+rotateSkew0 = 0
+rotateSkew1 = 0
+scaleX = 0
+scaleY = 0
+translateX = 0
+translateY = 0
+x = 0
+y = 0
+}
+
+Leg1 {
+SpriteID = 13
+ShapeID = 12
+Width = 324
+Height = 630
+hasRotate = false
+rotateAngle = 0
+hasScale = false
+rotateSkew0 = 0
+rotateSkew1 = 0
+scaleX = 0
+scaleY = 0
+translateX = 0
+translateY = 0
+x = 0
+y = 0
+}
+
+Torso2 {
+SpriteID = 15
+ShapeID = 14
+Width = 651
+Height = 573
+hasRotate = false
+rotateAngle = 0
+hasScale = false
+rotateSkew0 = 0
+rotateSkew1 = 0
+scaleX = 0
+scaleY = 0
+translateX = 0
+translateY = 0
+x = 0
+y = 0
+}
+
+Arm1 {
+SpriteID = 17
+ShapeID = 16
+Width = 363
+Height = 761
+hasRotate = false
+rotateAngle = 0
+hasScale = false
+rotateSkew0 = 0
+rotateSkew1 = 0
+scaleX = 0
+scaleY = 0
+translateX = 0
+translateY = 0
+x = 0
+y = 0
+}
+
+Forearm {
+SpriteID = 21
+ShapeID = 20
+Width = 845
+Height = 561
+hasRotate = false
+rotateAngle = 0
+hasScale = false
+rotateSkew0 = 0
+rotateSkew1 = 0
+scaleX = 0
+scaleY = 0
+translateX = 0
+translateY = 0
+x = 0
+y = 0
+}
+
+Shoulder1 {
+SpriteID = 23
+ShapeID = 22
+Width = 557
+Height = 403
+hasRotate = false
+rotateAngle = 0
+hasScale = false
+rotateSkew0 = 0
+rotateSkew1 = 0
+scaleX = 0
+scaleY = 0
+translateX = 0
+translateY = 0
+x = 0
+y = 0
+}
+
+Torso1 {
+SpriteID = 25
+ShapeID = 24
+Width = 917
+Height = 1271
+hasRotate = false
+rotateAngle = 0
+hasScale = false
+rotateSkew0 = 0
+rotateSkew1 = 0
+scaleX = 0
+scaleY = 0
+translateX = 0
+translateY = 0
+x = 0
+y = 0
+}
+
+ShinSide {
+SpriteID = 27
+ShapeID = 26
+Width = 686
+Height = 879
+hasRotate = false
+rotateAngle = 0
+hasScale = false
+rotateSkew0 = 0
+rotateSkew1 = 0
+scaleX = 0
+scaleY = 0
+translateX = 0
+translateY = 0
+x = 0
+y = 0
+}
+
+Foot1Side {
+SpriteID = 29
+ShapeID = 28
+Width = 530
+Height = 225
+hasRotate = false
+rotateAngle = 0
+hasScale = false
+rotateSkew0 = 0
+rotateSkew1 = 0
+scaleX = 0
+scaleY = 0
+translateX = 0
+translateY = 0
+x = 0
+y = 0
+}
+
+Hands1 {
+SpriteID = 94
+ShapeID = 93
+Width = 1036
+Height = 748
+hasRotate = false
+rotateAngle = 0
+hasScale = false
+rotateSkew0 = 0
+rotateSkew1 = 0
+scaleX = 0
+scaleY = 0
+translateX = 0
+translateY = 0
+x = 0
+y = 0
+}
+
+Shin {
+SpriteID = 31
+ShapeID = 30
+Width = 707
+Height = 875
+hasRotate = false
+rotateAngle = 0
+hasScale = false
+rotateSkew0 = 0
+rotateSkew1 = 0
+scaleX = 0
+scaleY = 0
+translateX = 0
+translateY = 0
+x = 0
+y = 0
+}
+
+Foot1 {
+SpriteID = 33
+ShapeID = 32
+Width = 600
+Height = 226
+hasRotate = false
+rotateAngle = 0
+hasScale = false
+rotateSkew0 = 0
+rotateSkew1 = 0
+scaleX = 0
+scaleY = 0
+translateX = 0
+translateY = 0
+x = 0
+y = 0
+}
+
+Hands2 {
+SpriteID = 35
+ShapeID = 34
+Width = 1195
+Height = 743
+hasRotate = false
+rotateAngle = 0
+hasScale = false
+rotateSkew0 = 0
+rotateSkew1 = 0
+scaleX = 0
+scaleY = 0
+translateX = 0
+translateY = 0
+x = 0
+y = 0
+}
+
+Jaw {
+SpriteID = 37
+ShapeID = 36
+Width = 1390
+Height = 1508
+hasRotate = false
+rotateAngle = 0
+hasScale = false
+rotateSkew0 = 0
+rotateSkew1 = 0
+scaleX = 0
+scaleY = 0
+translateX = 0
+translateY = 0
+x = 0
+y = 0
+}
+
+Eyes {
+SpriteID = 39
+ShapeID = 38
+Width = 833
+Height = 493
+hasRotate = false
+rotateAngle = 0
+hasScale = false
+rotateSkew0 = 0
+rotateSkew1 = 0
+scaleX = 0
+scaleY = 0
+translateX = 0
+translateY = 0
+x = 0
+y = 0
+}
+
+Mouth {
+SpriteID = 41
+ShapeID = 40
+Width = 432
+Height = 217
+hasRotate = false
+rotateAngle = 0
+hasScale = false
+rotateSkew0 = 0
+rotateSkew1 = 0
+scaleX = 0
+scaleY = 0
+translateX = 0
+translateY = 0
+x = 0
+y = 0
+}
+
+Nose {
+SpriteID = 43
+ShapeID = 42
+Width = 263
+Height = 402
+hasRotate = false
+rotateAngle = 0
+hasScale = false
+rotateSkew0 = 0
+rotateSkew1 = 0
+scaleX = 0
+scaleY = 0
+translateX = 0
+translateY = 0
+x = 0
+y = 0
+}
+
+Hair {
+SpriteID = 45
+ShapeID = 44
+Width = 400
+Height = 430
+hasRotate = false
+rotateAngle = 0
+hasScale = false
+rotateSkew0 = 0
+rotateSkew1 = 0
+scaleX = 0
+scaleY = 0
+translateX = 0
+translateY = 0
+x = 0
+y = 0
+}
+
+Hair2 {
+SpriteID = 46
+x = 0
+y = 0
+}
+
+Helmet {
+SpriteID = 48
+ShapeID = 47
+Width = 293
+Height = 342
+hasRotate = false
+rotateAngle = 0
+hasScale = false
+rotateSkew0 = 0
+rotateSkew1 = 0
+scaleX = 0
+scaleY = 0
+translateX = 0
+translateY = 0
+x = 0
+y = 0
+}
+
+Head {
+SpriteID = 49
+ShapeID = 37
+hasRotate = false
+rotateAngle = 0
+hasScale = false
+rotateSkew0 = 0
+rotateSkew1 = 0
+scaleX = 0
+scaleY = 0
+translateX = -6
+translateY = -17
+x = 0
+y = 0
+}
+
+Body {
+SpriteID = 126
+ShapeID = 11
+hasRotate = true
+rotateAngle = 90.0
+hasScale = true
+rotateSkew0 = 0
+rotateSkew1 = 9859
+scaleX = 65536
+scaleY = 65530
+translateX = 1647
+translateY = 2675
+x = 0
+y = 0
+}
+
