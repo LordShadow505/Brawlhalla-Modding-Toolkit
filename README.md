@@ -4,7 +4,7 @@
 
 **Based in [Epicsninja BrawlhallaModTools](https://github.com/Epicsninja/BrawlhallaModTools) - Credits to him **
 
-![window](https://github.com/LordShadow505/SimpleSpriteExporter-Brawlhalla/blob/main/Wiki/Example2.png)
+![window](https://github.com/LordShadow505/SimpleSpriteExporter-Brawlhalla/blob/main/Wiki/SSE-img.png)
 
 ## How to use
 
