@@ -19,7 +19,6 @@ from customtkinter import CTkFrame
 from Lib import Methods
 from CTkListbox import *
 
-
 '''
 Methods:
 def get_all_skin_names(swf, level):
@@ -63,7 +62,10 @@ class SpriteExporterPanel(ctk.CTk):
         ctk.set_appearance_mode("Dark")
         fontsFolder = os.path.join(os.path.dirname(__file__), '..', 'fonts')
         font_path = os.path.join(fontsFolder, "Roboto-Medium.ttf")
-        icon_path = os.path.join(os.path.dirname(__file__), 'icons', 'icon.png')
+        icon_path = os.path.join(os.path.dirname(__file__), 'icons', 'Icon32.ico')
+        # Establece el icono de la ventana y del panel
+        self.wm_iconbitmap(icon_path)
+
 
 
         def relative_to_assets(path: str) -> str:

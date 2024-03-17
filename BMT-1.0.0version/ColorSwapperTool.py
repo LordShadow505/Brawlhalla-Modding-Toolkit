@@ -24,7 +24,7 @@ def replace_color():
                 for attr in ('red', 'green', 'blue'):
                     color_node.attrib[attr] = str(new_color[('red', 'green', 'blue').index(attr)])
     tree.write(rutaarchivo)
-    messagebox.showinfo("Éxito", "Se han reemplazado los colores en el archivo.")
+    messagebox.showinfo("Success", "Colors replaced successfully")
 
 # Función para seleccionar un color
 def select_color(color):
@@ -162,7 +162,7 @@ def load_xml():
     update_color_buttons()
 
 # Seleccionar archivo XML
-rutaarchivo = filedialog.askopenfilename(title="Selecciona el archivo XML", filetypes=[("XML files", "*.xml")])
+rutaarchivo = filedialog.askopenfilename(title="Select the XML", filetypes=[("XML files", "*.xml")])
 
 # Inicialización de variables
 selected_color = None
@@ -219,6 +219,6 @@ canvas.configure(yscrollcommand=scrollbar.set)
 
 colors_frame = scrollable_frame  # Ahora los botones se agregarán al frame scrollable_frame
 
-load_xml()
-
-root.mainloop()
+if __name__ == "__main__":
+    load_xml()
+    root.mainloop()
