@@ -14,7 +14,7 @@
 * Filter and export a skin into a single .swf file
 * This makes the modding process more efficient
   
-![window](https://github.com/LordShadow505/SimpleSpriteExporter-Brawlhalla/blob/main/Wiki/SSE-img.png)
+![window](https://github.com/LordShadow505/SimpleSpriteExporter-Brawlhalla/blob/main/Wiki/SSE-img-update.png)
 
 ## How to use
 
