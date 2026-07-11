@@ -1,0 +1,8 @@
+customtkinter
+Pillow
+requests
+zstandard
+resvg-py
+jpype1
+skia-python
+vtracer

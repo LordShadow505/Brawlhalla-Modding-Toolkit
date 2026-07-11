@@ -1,0 +1,232 @@
+{
+    "Fire": {
+        "name": "Fire",
+        "description": "Dark red → Orange → Yellow → White",
+        "stops": [
+            {
+                "brightness": 0.0,
+                "color": [
+                    139,
+                    0,
+                    0
+                ]
+            },
+            {
+                "brightness": 0.25,
+                "color": [
+                    255,
+                    69,
+                    0
+                ]
+            },
+            {
+                "brightness": 0.5,
+                "color": [
+                    255,
+                    140,
+                    0
+                ]
+            },
+            {
+                "brightness": 0.75,
+                "color": [
+                    255,
+                    215,
+                    0
+                ]
+            },
+            {
+                "brightness": 1.0,
+                "color": [
+                    255,
+                    255,
+                    200
+                ]
+            }
+        ]
+    },
+    "Ocean": {
+        "name": "Ocean",
+        "description": "Dark blue → Cyan → Light cyan → White",
+        "stops": [
+            {
+                "brightness": 0.0,
+                "color": [
+                    0,
+                    0,
+                    139
+                ]
+            },
+            {
+                "brightness": 0.33,
+                "color": [
+                    0,
+                    105,
+                    148
+                ]
+            },
+            {
+                "brightness": 0.66,
+                "color": [
+                    0,
+                    191,
+                    255
+                ]
+            },
+            {
+                "brightness": 0.85,
+                "color": [
+                    135,
+                    206,
+                    250
+                ]
+            },
+            {
+                "brightness": 1.0,
+                "color": [
+                    240,
+                    248,
+                    255
+                ]
+            }
+        ]
+    },
+    "Purple Dream": {
+        "name": "Purple Dream",
+        "description": "Dark purple → Magenta → Pink → White",
+        "stops": [
+            {
+                "brightness": 0.0,
+                "color": [
+                    75,
+                    0,
+                    130
+                ]
+            },
+            {
+                "brightness": 0.33,
+                "color": [
+                    138,
+                    43,
+                    226
+                ]
+            },
+            {
+                "brightness": 0.66,
+                "color": [
+                    218,
+                    112,
+                    214
+                ]
+            },
+            {
+                "brightness": 0.85,
+                "color": [
+                    255,
+                    182,
+                    193
+                ]
+            },
+            {
+                "brightness": 1.0,
+                "color": [
+                    255,
+                    240,
+                    245
+                ]
+            }
+        ]
+    },
+    "Forest": {
+        "name": "Forest",
+        "description": "Dark green → Green → Lime → Light green",
+        "stops": [
+            {
+                "brightness": 0.0,
+                "color": [
+                    0,
+                    100,
+                    0
+                ]
+            },
+            {
+                "brightness": 0.33,
+                "color": [
+                    34,
+                    139,
+                    34
+                ]
+            },
+            {
+                "brightness": 0.66,
+                "color": [
+                    50,
+                    205,
+                    50
+                ]
+            },
+            {
+                "brightness": 0.85,
+                "color": [
+                    144,
+                    238,
+                    144
+                ]
+            },
+            {
+                "brightness": 1.0,
+                "color": [
+                    240,
+                    255,
+                    240
+                ]
+            }
+        ]
+    },
+    "Sunset": {
+        "name": "Sunset",
+        "description": "Deep purple → Red → Orange → Yellow",
+        "stops": [
+            {
+                "brightness": 0.0,
+                "color": [
+                    72,
+                    61,
+                    139
+                ]
+            },
+            {
+                "brightness": 0.25,
+                "color": [
+                    138,
+                    54,
+                    100
+                ]
+            },
+            {
+                "brightness": 0.5,
+                "color": [
+                    220,
+                    20,
+                    60
+                ]
+            },
+            {
+                "brightness": 0.75,
+                "color": [
+                    255,
+                    140,
+                    0
+                ]
+            },
+            {
+                "brightness": 1.0,
+                "color": [
+                    255,
+                    223,
+                    0
+                ]
+            }
+        ]
+    }
+}

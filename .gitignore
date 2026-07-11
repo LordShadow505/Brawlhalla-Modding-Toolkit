@@ -1,0 +1,17 @@
+# Build artifacts
+dist/
+build/
+*.spec.bak
+
+# Build script (local only)
+build_bmt.py
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+
+# IDE
+.vscode/
+.idea/
