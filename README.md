@@ -2,7 +2,7 @@
 
 **BMT** is the ultimate multi-tool designed to streamline and enhance the Brawlhalla modding experience. With a comprehensive suite of powerful features, it provides a seamless workflow for creators to modify game assets efficiently.
 
-For detailed guides, tutorials, and instructions on how to use each tool, please visit the [BMT Wiki](Wiki/Home.md).
+For detailed guides, tutorials, and instructions on how to use each tool, please visit the [BMT Wiki](https://github.com/LordShadow505/Brawlhalla-Modding-Toolkit/wiki).
 
 ---
 
@@ -32,6 +32,6 @@ Create and post-process SVG files, optimizing paths and nodes to ensure maximum 
 ---
 
 ## Acknowledgments and Licenses
-Brawlhalla Modding Toolkit utilizes several open-source libraries. Please see the [Licenses page in the Wiki](Wiki/Licenses.md) for full details, links, and credits.
+Brawlhalla Modding Toolkit utilizes several open-source libraries. Please see the [Licenses page in the Wiki](https://github.com/LordShadow505/Brawlhalla-Modding-Toolkit/wiki/Licenses) for full details, links, and credits.
 
 *Original concept based on [Epicsninja BrawlhallaModTools](https://github.com/Epicsninja/BrawlhallaModTools) and Python Implementation based on [BhModCreator](https://github.com/Farbigoz/BhModCreator).*
