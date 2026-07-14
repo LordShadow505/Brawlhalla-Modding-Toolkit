@@ -426,6 +426,52 @@ class BrawlhallaModdingToolkit(ctk.CTk):
     def _load_step_finish(self):
         enabled = sum(1 for v in ENABLED_TOOLS.values() if v)
         self._splash_log_msg(f"[INFO] {enabled} tools registered")
+        self._splash_progress(0.95)
+        self.after(50, self._load_step_update_check)
+
+    def _load_step_update_check(self):
+        self._splash_log_msg("[INFO] Checking for updates...")
+        
+        def _check():
+            try:
+                import requests
+                url = "https://api.github.com/repos/LordShadow505/Brawlhalla-Modding-Toolkit/releases/latest"
+                resp = requests.get(url, timeout=3)
+                if resp.status_code == 200:
+                    data = resp.json()
+                    latest_version = data.get("tag_name", "").strip("vV")
+                    
+                    def parse_v(v):
+                        return tuple(int(x) for x in v.split(".") if x.isdigit())
+                    
+                    current = parse_v(APP_VERSION)
+                    latest = parse_v(latest_version)
+                    
+                    if latest > current:
+                        self.after(0, lambda: self._splash_log_msg("[OK] Update found!"))
+                        changelog = data.get("body") or "No changelog available."
+                        lines = changelog.split("\n")
+                        if len(lines) > 10:
+                            changelog = "\n".join(lines[:10]) + "\n\n... (Read more on GitHub)"
+                        
+                        download_url = f"https://github.com/LordShadow505/Brawlhalla-Modding-Toolkit/releases/download/{data.get('tag_name')}/BrawlhallaModdingToolkit.exe"
+                        self._pending_update = (latest_version, changelog, download_url)
+                    else:
+                        self.after(0, lambda: self._splash_log_msg("[INFO] No updates found."))
+                        self._pending_update = None
+                else:
+                    self.after(0, lambda: self._splash_log_msg("[WARNING] Could not check for updates."))
+                    self._pending_update = None
+            except Exception as e:
+                self.after(0, lambda: self._splash_log_msg("[WARNING] Could not check for updates."))
+                self._pending_update = None
+            
+            self.after(800, self._finalize_splash)
+                
+        import threading
+        threading.Thread(target=_check, daemon=True).start()
+
+    def _finalize_splash(self):
         self._splash_log_msg("[OK] Brawlhalla Modding Toolkit is ready!")
         self._splash_progress(1.0)
         self.after(600, self._destroy_splash)
@@ -456,6 +502,123 @@ class BrawlhallaModdingToolkit(ctk.CTk):
             self.lift()
         except Exception:
             pass
+        
+        if getattr(self, '_pending_update', None):
+            self.after(1000, lambda: self.show_update_dialog(*self._pending_update))
+            
+            if hasattr(self, 'update_link_label'):
+                version, changelog, download_url = self._pending_update
+                self.update_link_label.configure(text=f"Update found: {version}")
+                def open_github_release(e):
+                    import webbrowser
+                    webbrowser.open("https://github.com/LordShadow505/Brawlhalla-Modding-Toolkit/releases/latest")
+                self.update_link_label.bind("<Button-1>", open_github_release)
+
+    def show_update_dialog(self, version, changelog, download_url):
+        dialog = ctk.CTkToplevel(self)
+        dialog.title("Update Available!")
+        dialog.geometry("500x450")
+        dialog.attributes("-topmost", True)
+        dialog.transient(self)
+        
+        try:
+            ico_path = Path(__file__).parent / "resources" / "icons" / "Icon32.ico"
+            if ico_path.exists():
+                dialog.after(10, lambda: dialog.iconbitmap(str(ico_path)))
+        except Exception:
+            pass
+        
+        lbl = ctk.CTkLabel(dialog, text=f"New version {version} is available!\n\nCurrent version: {APP_VERSION}", font=("Roboto", 16, "bold"))
+        lbl.pack(pady=10)
+        
+        txt = ctk.CTkTextbox(dialog, width=460, height=250)
+        txt.pack(pady=10)
+        txt.insert("0.0", changelog)
+        txt.configure(state="disabled")
+        
+        btn_frame = ctk.CTkFrame(dialog, fg_color="transparent")
+        btn_frame.pack(pady=10)
+        
+        def do_update():
+            dialog.destroy()
+            self.download_and_install_update(download_url)
+            
+        btn_yes = ctk.CTkButton(btn_frame, text="Update Now", command=do_update)
+        btn_yes.pack(side="left", padx=10)
+        
+        btn_no = ctk.CTkButton(btn_frame, text="Later", command=dialog.destroy, fg_color="gray")
+        btn_no.pack(side="right", padx=10)
+
+    def download_and_install_update(self, url):
+        import sys
+        is_compiled = getattr(sys, 'frozen', False) or (sys.executable.lower().endswith(".exe") and "python" not in sys.executable.lower())
+        exe_path = sys.executable if is_compiled else None
+        
+        if not exe_path:
+            messagebox.showinfo("Update", "Running from source. Please download the release manually.")
+            return
+
+        progress_dialog = ctk.CTkToplevel(self)
+        progress_dialog.title("Downloading Update...")
+        progress_dialog.geometry("400x150")
+        progress_dialog.attributes("-topmost", True)
+        progress_dialog.transient(self)
+        progress_dialog.protocol("WM_DELETE_WINDOW", lambda: None)
+        
+        try:
+            ico_path = Path(__file__).parent / "resources" / "icons" / "Icon32.ico"
+            if ico_path.exists():
+                progress_dialog.after(10, lambda: progress_dialog.iconbitmap(str(ico_path)))
+        except Exception:
+            pass
+        
+        lbl = ctk.CTkLabel(progress_dialog, text="Downloading...", font=("Roboto", 14))
+        lbl.pack(pady=20)
+        
+        pbar = ctk.CTkProgressBar(progress_dialog, width=300)
+        pbar.pack(pady=10)
+        pbar.set(0)
+        
+        def _download():
+            import requests
+            import os
+            import subprocess
+            try:
+                resp = requests.get(url, stream=True)
+                total = int(resp.headers.get('content-length', 0))
+                
+                new_exe_path = exe_path + ".new"
+                downloaded = 0
+                with open(new_exe_path, "wb") as f:
+                    for chunk in resp.iter_content(chunk_size=8192):
+                        if chunk:
+                            f.write(chunk)
+                            downloaded += len(chunk)
+                            if total:
+                                pct = downloaded / total
+                                self.after(0, lambda p=pct: pbar.set(p))
+                                
+                self.after(0, lambda: lbl.configure(text="Installing..."))
+                
+                bat_path = os.path.join(os.environ.get("TEMP", "C:\\"), "bmt_updater.bat")
+                with open(bat_path, "w") as f:
+                    f.write(f'''@echo off
+timeout /t 2 /nobreak >nul
+del "{exe_path}"
+ren "{new_exe_path}" "{os.path.basename(exe_path)}"
+start "" "{exe_path}"
+del "%~f0"
+''')
+                
+                subprocess.Popen(bat_path, shell=True)
+                self.after(0, self.on_close)
+                
+            except Exception as e:
+                self.after(0, lambda: messagebox.showerror("Update Error", str(e)))
+                self.after(0, progress_dialog.destroy)
+                
+        import threading
+        threading.Thread(target=_download, daemon=True).start()
 
     # ═══════════════════════════════════════════════════════════════════
     #  TOOL LOADING OVERLAY (animated hourglass inside main panel)
@@ -572,9 +735,44 @@ class BrawlhallaModdingToolkit(ctk.CTk):
         )
         version_label.pack()
         
+        self.update_link_label = ctk.CTkLabel(
+            title_frame,
+            text="",
+            font=ctk.CTkFont(family="Roboto", size=10, underline=True),
+            text_color="#1E90FF",
+            cursor="hand2"
+        )
+        self.update_link_label.pack(pady=(2, 0))
+        
+        # Footer con configuración
+        footer_frame = ctk.CTkFrame(sidebar, fg_color="#171717")
+        footer_frame.pack(side="bottom", fill="x", padx=15, pady=20)
+        
+        # Contenedor scrolleable
+        self.scrollable_tools = ctk.CTkScrollableFrame(sidebar, fg_color="transparent", bg_color="transparent")
+        self.scrollable_tools.pack(fill="both", expand=True)
+
         # Separador
-        separator = ctk.CTkFrame(sidebar, height=2, fg_color="#2C2C2C")
-        separator.pack(fill="x", padx=15, pady=(0, 20))
+        separator = ctk.CTkFrame(self.scrollable_tools, height=2, fg_color="#2C2C2C")
+        separator.pack(fill="x", padx=10, pady=(0, 20))
+        
+        def open_wiki_sidebar():
+            import webbrowser
+            webbrowser.open("https://github.com/LordShadow505/Brawlhalla-Modding-Toolkit/wiki")
+
+        btn_wiki_side = ctk.CTkButton(
+            self.scrollable_tools,
+            text="  How to use?",
+            command=open_wiki_sidebar,
+            font=BMTTheme.get_font(13, "bold"),
+            fg_color="transparent",
+            hover_color="#2C2C2C",
+            anchor="w",
+            height=45,
+            corner_radius=BMTTheme.CORNER_RADIUS,
+            text_color="#1E90FF"
+        )
+        btn_wiki_side.pack(fill="x", padx=10, pady=4)
         
         # Botones de herramientas (solo las habilitadas en build_config)
         self.tool_buttons = {}
@@ -616,7 +814,7 @@ class BrawlhallaModdingToolkit(ctk.CTk):
             
             accent = self.tool_colors.get(name, BMTTheme.BLUE_GREY)
             btn = ctk.CTkButton(
-                sidebar,
+                self.scrollable_tools,
                 text=f"  {name}",
                 image=icon,
                 compound="left",
@@ -629,7 +827,7 @@ class BrawlhallaModdingToolkit(ctk.CTk):
                 corner_radius=BMTTheme.CORNER_RADIUS,
                 text_color=BMTTheme.WHITE
             )
-            btn.pack(fill="x", padx=15, pady=4)
+            btn.pack(fill="x", padx=10, pady=4)
             self.tool_buttons[name] = btn
             
             # Attach Tooltip
@@ -639,10 +837,6 @@ class BrawlhallaModdingToolkit(ctk.CTk):
         
         # No activar ningún botón por defecto
         # self.set_active_button("Sprite Exporter")
-        
-        # Footer con configuración
-        footer_frame = ctk.CTkFrame(sidebar, fg_color="#171717")
-        footer_frame.pack(side="bottom", fill="x", padx=15, pady=20)
         
         # Use icon for settings if available, otherwise plain text
         settings_icon = self.icons.get('settings')
@@ -771,7 +965,19 @@ class BrawlhallaModdingToolkit(ctk.CTk):
             font=ctk.CTkFont(family="Roboto", size=18, weight="normal"),
             text_color="#9E9E9E"
         )
-        subtitle.pack(pady=(0, 40))
+        subtitle.pack(pady=(0, 10))
+        
+        def open_wiki_main():
+            import webbrowser
+            webbrowser.open("https://github.com/LordShadow505/Brawlhalla-Modding-Toolkit/wiki")
+            
+        btn_wiki_main = ctk.CTkButton(
+            center_frame, text="How to use?", 
+            font=ctk.CTkFont(family="Roboto", size=14, underline=True),
+            text_color="#1E90FF", fg_color="transparent", hover_color="#1E1E1E",
+            command=open_wiki_main
+        )
+        btn_wiki_main.pack(pady=(0, 30))
         
         # Grid de herramientas con iconos grandes
         tools_grid = ctk.CTkFrame(center_frame, fg_color="transparent")
@@ -830,6 +1036,8 @@ class BrawlhallaModdingToolkit(ctk.CTk):
             )
             tool_name_label.pack(pady=(0, 10))
         
+
+
         # Mensaje de configuración si faltan rutas
         if not self.gamePathString or not self.modsPathString:
             warning_frame = ctk.CTkFrame(welcome_frame, fg_color="#2C2C2C", corner_radius=8)
