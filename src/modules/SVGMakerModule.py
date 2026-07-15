@@ -217,7 +217,7 @@ class SVGMakerModule(ToolModule):
         
         self.btn_process = ctk.CTkButton(
             right_container,
-            text="Generate Preview",
+            text="Generate!",
             command=self.process_preview,
             font=button_font,
             text_color="white",
@@ -260,20 +260,20 @@ class SVGMakerModule(ToolModule):
         )
         self.chk_auto.pack(pady=5, padx=10, anchor="w")
         self.auto_sliders_frame = ctk.CTkFrame(basic_frame, fg_color="transparent")
-        self.create_slider(self.auto_sliders_frame, "Target Color Quality", "target_quality", 50, 99, 90, "Target color similarity score (50-99%).")
-        self.create_slider(self.auto_sliders_frame, "Max Iterations", "auto_max_iters", 1, 10, 4, "Maximum self-verification retries.")
+        self.create_slider(self.auto_sliders_frame, "Target Color Quality", "target_quality", 50, 99, 90, "Target color similarity score (50-99%) (Lower reduces quality target, higher requires better quality).")
+        self.create_slider(self.auto_sliders_frame, "Max Iterations", "auto_max_iters", 1, 10, 4, "Maximum self-verification retries (Lower retries less, higher retries more).")
         
         # Color Post-Processing
         color_frame = self.create_section(settings_panel, "Color Quantization")
-        self.create_slider(color_frame, "Color precision", "color_precision", 1, 32, 16, "Internal VTracer precision (lower uses more colors).")
-        self.create_slider(color_frame, "Layer Difference", "layer_difference", 1, 12, 6, "Threshold for merging similar layers.")
+        self.create_slider(color_frame, "Color precision", "color_precision", 1, 32, 16, "Internal VTracer precision (Lower uses more colors, higher uses fewer colors).")
+        self.create_slider(color_frame, "Layer Difference", "layer_difference", 1, 12, 6, "Threshold for merging similar layers (Lower merges fewer layers, higher merges more layers).")
         
-        self.create_slider(color_frame, "Color Spatial Radius", "spatial_radius", 1, 8, 3, "Analyzes NxN blocks to find regional colors, avoiding noise.")
-        self.create_slider(color_frame, "Color Merge Threshold", "merge_threshold", 0, 200, 30, "Similarity threshold for merging colors.")
+        self.create_slider(color_frame, "Color Spatial Radius", "spatial_radius", 1, 8, 3, "Analyzes NxN blocks to find regional colors (Lower analyzes smaller blocks, higher analyzes larger blocks).")
+        self.create_slider(color_frame, "Color Merge Threshold", "merge_threshold", 0, 200, 30, "Similarity threshold for merging colors (Lower merges only very similar colors, higher merges more distinct colors).")
         
         self.color_slider, self.color_slider_lbl = self.create_dynamic_slider(
             color_frame, "Max Palette Colors", "max_palette_colors", 2, 256, 32, 
-            "Limits the final SVG colors. Post-process real-time.", self.on_palette_slider_change)
+            "Limits the final SVG colors. Post-process real-time (Lower uses fewer colors, higher allows more colors).", self.on_palette_slider_change)
             
         # Path Optimization
         path_frame = self.create_section(settings_panel, "Path Optimization")
@@ -281,12 +281,12 @@ class SVGMakerModule(ToolModule):
         self.simplify_paths_var = tk.BooleanVar(value=True)
         ctk.CTkCheckBox(path_frame, text="Post-Simplify Paths", variable=self.simplify_paths_var, font=("Roboto", 12), fg_color=BMTTheme.LIME, hover_color=BMTTheme.ACID_GREEN).pack(pady=5, padx=10, anchor="w")
         
-        self.create_slider(path_frame, "Filter Speckle (Noise)", "filter_speckle", 0, 16, 10, "Removes small specks or noise from the image.")
-        self.create_slider(path_frame, "Corner Threshold", "corner_threshold", 1, 100, 60, "Angle threshold for detecting sharp corners.")
-        self.create_slider(path_frame, "Length Threshold", "length_threshold", 1, 100, 30, "Minimum length for merging short segments.")
-        self.create_slider(path_frame, "Splice Threshold", "splice_threshold", 1, 100, 45, "Threshold for splicing nearby paths.")
-        self.create_slider(path_frame, "Path Precision", "path_precision", 1, 10, 8, "Overall precision when processing vector paths.")
-        self.create_slider(path_frame, "Max Iterations", "max_iterations", 1, 30, 16, "Maximum iterations of the curve optimizer.")
+        self.create_slider(path_frame, "Filter Speckle (Noise)", "filter_speckle", 0, 16, 10, "Removes small specks or noise from the image (Lower keeps more noise, higher removes more noise).")
+        self.create_slider(path_frame, "Corner Threshold", "corner_threshold", 1, 100, 60, "Angle threshold for detecting sharp corners (Lower detects sharper corners, higher allows smoother corners).")
+        self.create_slider(path_frame, "Length Threshold", "length_threshold", 1, 100, 30, "Minimum length for merging short segments (Lower keeps shorter segments, higher merges longer segments).")
+        self.create_slider(path_frame, "Splice Threshold", "splice_threshold", 1, 100, 45, "Threshold for splicing nearby paths (Lower splices closer paths, higher splices further paths).")
+        self.create_slider(path_frame, "Path Precision", "path_precision", 1, 10, 8, "Overall precision when processing vector paths (Lower uses fewer points, higher uses more points).")
+        self.create_slider(path_frame, "Max Iterations", "max_iterations", 1, 30, 16, "Maximum iterations of the curve optimizer (Lower is faster but less optimized, higher optimizes more).")
         
         # Post Optimizer
         self.post_opt_frame = self.create_section(settings_panel, "Post Optimizer", collapsible=True)
@@ -651,7 +651,7 @@ class SVGMakerModule(ToolModule):
             if self._resized_orig:
                 self.tk_orig = ImageTk.PhotoImage(self._resized_orig)
                 self.canvas_preview.create_image(0, 0, image=self.tk_orig, anchor="nw")
-            self.canvas_preview.create_text(cw//2, ch-30, text="Click 'Generate Preview'", fill="#A0A0A0", font=("Roboto", 14))
+            self.canvas_preview.create_text(cw//2, ch-30, text="Click 'Generate!'", fill="#A0A0A0", font=("Roboto", 14))
             return
             
         split_x = int(cw * self.slider_ratio)
@@ -761,7 +761,7 @@ class SVGMakerModule(ToolModule):
             except Exception as e:
                 print(f"[SVG Maker] Optimizer Error: {e}")
                 
-            self.container.after(0, lambda: self.btn_process.configure(text="Generate Preview"))
+            self.container.after(0, lambda: self.btn_process.configure(text="Generate!"))
             self.container.after(0, self.apply_post_processing)
             
         import threading
@@ -1479,7 +1479,7 @@ class SVGMakerModule(ToolModule):
                 
             self.apply_post_processing()
             
-            self.btn_process.configure(state="normal", text="Generate Preview", fg_color=BMTTheme.LIME, text_color="white")
+            self.btn_process.configure(state="normal", text="Generate!", fg_color=BMTTheme.LIME, text_color="white")
             self.btn_export.configure(state="normal")
             
             for btn in getattr(self, 'post_btns', []):
@@ -1488,7 +1488,7 @@ class SVGMakerModule(ToolModule):
             self.slider_ratio = 1.0
             self._animate_reveal()
         else:
-            self.btn_process.configure(state="normal", text="Generate Preview", fg_color="#2C2C2C", text_color="white")
+            self.btn_process.configure(state="normal", text="Generate!", fg_color="#2C2C2C", text_color="white")
             
     def _animate_reveal(self):
         if self.slider_ratio > 0.5:
@@ -1500,7 +1500,16 @@ class SVGMakerModule(ToolModule):
         target_export = self.output_post_temp if os.path.exists(self.output_post_temp) else self.output_temp
         if not os.path.exists(target_export): return
         
+        import datetime
+        default_name = "Export"
+        if self.input_path:
+            base = os.path.basename(self.input_path)
+            name_part = os.path.splitext(base)[0]
+            timestamp = datetime.datetime.now().strftime("%d%m%Y%H%M")
+            default_name = f"{name_part}-{timestamp}"
+        
         out_path = filedialog.asksaveasfilename(
+            initialfile=f"{default_name}.svg",
             defaultextension=".svg",
             filetypes=[("SVG Vector Image", "*.svg")],
             title="Save SVG As"

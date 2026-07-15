@@ -1365,12 +1365,38 @@ class SpriteExporterModule:
             messagebox.showwarning("No SWF Loaded", "Please load a SWF file first")
             self.log("ERROR: No SWF loaded")
             return
+            
+        if self.selected_skin_index is None or self.selected_skin_index >= len(self.all_names):
+            messagebox.showwarning("No Skin Selected", "Please select a skin from the list")
+            self.log("ERROR: No skin selected")
+            return
         
         try:
+            selected_name = self.all_names[self.selected_skin_index]
+            display_name = self.get_skin_display_name(selected_name)
+            
+            # Obtener el SWF correcto para esta skin
+            swf_to_use = self.extractorSelectedSwf
+            swf_name_to_use = self.swfName
+            
+            if selected_name in self.skin_to_swf_map:
+                swf_path, swf_obj = self.skin_to_swf_map[selected_name]
+                swf_to_use = swf_obj
+                swf_name_to_use = os.path.basename(swf_path)
+                self.log(f"Using SWF: {swf_name_to_use}")
+                
+            self.log(f"Filtering SWF for skin: {display_name}...")
+            filtered_swf = Methods.export_mod(
+                [],  # assets to extract
+                swf_to_use,
+                swf_name_to_use,
+                selected_name
+            )
+            
             self.log("Exporting shapes as SVG...")
             
-            # Exportar shapes (usando el SWF ya cargado)
-            Methods.extract_shapes(self.extractorSelectedSwf, "SVG", False)
+            # Exportar shapes (usando el SWF filtrado)
+            Methods.extract_shapes(filtered_swf, "SVG", False)
             
             self.log("[OK] Shapes exported successfully!")
             messagebox.showinfo("Export Complete", "Shapes exported successfully!")
@@ -1411,12 +1437,20 @@ class SpriteExporterModule:
                 swf_name_to_use = os.path.basename(swf_path)
                 self.log(f"Using SWF: {swf_name_to_use}")
             
+            self.log(f"Filtering SWF for skin: {display_name}...")
+            filtered_swf = Methods.export_mod(
+                [],  # assets to extract
+                swf_to_use,
+                swf_name_to_use,
+                selected_name
+            )
+            
             self.log(f"Exporting sprites for: {display_name}")
             
             # Exportar sprites
             Methods.extract_sprites(
                 selected_name,
-                swf_to_use,
+                filtered_swf,
                 "SVG",  # mode
                 self.ExportScaleUsed,
                 swf_name_to_use,

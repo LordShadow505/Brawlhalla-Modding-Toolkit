@@ -38,11 +38,33 @@ elif sys.platform == "darwin":
 else:
     pass
 
+JAVA_ERROR_MSG = """Java is missing or incompatible. To fix this:
+
+1. Download and install Windows Offline (64-bit) from: http://java.com/download/manual.jsp
+2. Search Windows for "Environment Variables".
+3. Add a new System Variable: Name="JAVA_HOME", Value="C:\\Program Files\\Java\\jdk-xxx" (your install path).
+4. Edit the System "Path" variable and add: %JAVA_HOME%\\bin
+5. Restart your computer."""
+
+import tkinter.messagebox as messagebox
+
 if jvmpath is None:
-    raise ImportError("Java not found!")
+    try:
+        messagebox.showerror("Java Initialization Error", JAVA_ERROR_MSG)
+    except:
+        pass
+    raise ImportError(JAVA_ERROR_MSG)
 
 if not jpype.isJVMStarted():
-    jpype.startJVM(jvmpath, "-Xmx2048m", "-Xms128m", classpath=[FFDEC_LIB, CMYKJPEG_LIB, JL_LIB])
+    try:
+        jpype.startJVM(jvmpath, "-Xmx2048m", "-Xms128m", classpath=[FFDEC_LIB, CMYKJPEG_LIB, JL_LIB])
+    except Exception as e:
+        err_msg = f"Failed to start Java JVM.\n\n{JAVA_ERROR_MSG}\n\nTechnical details:\n{str(e)}"
+        try:
+            messagebox.showerror("Java Initialization Error", err_msg)
+        except:
+            pass
+        raise ImportError(err_msg)
 
 
 
