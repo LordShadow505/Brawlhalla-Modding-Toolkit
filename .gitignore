@@ -1,0 +1,19 @@
+# Build artifacts
+dist/
+build/
+brawlforge-modding-kit/
+*.spec.bak
+
+# Build script (local only)
+build_bmt.py
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+
+# IDE
+.vscode/
+.idea/
+e -i HEAD~2
